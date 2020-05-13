@@ -55,17 +55,13 @@ block,[;],command| identifier,[:=],arithmeticExpression|
 booleanExpression -->[true]|[false]|arithmeticExpression,[=],arithmeticExpression|
     [not],booleanExpression.
 
-arithmeticExpression --> additionOperation,arithmeticExpression1.
-arithmeticExpression1 --> [-],additionOperation,arithmeticExpression1|[].
+arithmeticExpression --> additionOperation,[-],arithmeticExpression|additionOperation.
 
-additionOperation --> multiplicationOperation,additionOperation1.
-additionOperation1 --> [+],multiplicationOperation,additionOperation1|[].
+additionOperation --> multiplicationOperation,[+],arithmeticExpression|multiplicationOperation.
 
-multiplicationOperation --> divisionOperation,multiplicationOperation1.
-multiplicationOperation1 --> [*],divisionOperation,multiplicationOperation1|[].
+multiplicationOperation --> divisionOperation,[*],arithmeticExpression|divisionOperation.
 
-divisionOperation --> generalOperation,divisionOperation1.
-divisionOperation1 --> [/],generalOperation,divisionOperation1|[].
+divisionOperation --> generalOperation,[/],arithmeticExpression|generalOperation.
 
 generalOperation --> identifier|number.
 
@@ -101,17 +97,17 @@ booleanExpression(bo(false)) --> [false].
 booleanExpression(bo(Z,Z1)) --> arithmeticExpression(Z),[=],arithmeticExpression(Z1).
 booleanExpression(bo(Z)) --> [not],booleanExpression(Z).
 
-arithmeticExpression(ae(Z,Z1)) --> additionOperation(Z),arithmeticExpression1(Z1).
-arithmeticExpression1(ae1(Z,Z1)) --> [-],additionOperation(Z),arithmeticExpression1(Z1)|[].
+arithmeticExpression(ae(Z,Z1)) --> additionOperation(Z),[-],arithmeticExpression(Z1).
+arithmeticExpression(ae(Z)) --> additionOperation(Z).
 
-additionOperation(ao(Z,Z1)) --> multiplicationOperation(Z),additionOperation1(Z1).
-additionOperation1(ao1(Z,Z1)) --> [+],multiplicationOperation(Z),additionOperation1(Z1)|[].
+additionOperation(ao(Z,Z1)) --> multiplicationOperation(Z),[+],arithmeticExpression(Z1).
+additionOperation(ao(Z)) --> multiplicationOperation(Z).
 
-multiplicationOperation(mo(Z,Z1)) --> divisionOperation(Z),multiplicationOperation1(Z1).
-multiplicationOperation1(mo1(Z,Z1)) --> [*],divisionOperation(Z),multiplicationOperation1(Z1)|[].
+multiplicationOperation(mo(Z,Z1)) --> divisionOperation(Z),[*],arithmeticExpression(Z1).
+multiplicationOperation(mo(Z)) --> divisionOperation(Z).
 
-divisionOperation(do(Z,Z1)) --> generalOperation(Z),divisionOperation1(Z1).
-divisionOperation1(do1(Z,Z1)) --> [/],generalOperation(Z),divisionOperation1(Z1)|[].
+divisionOperation(do(Z,Z1)) --> generalOperation(Z),[/],arithmeticExpression(Z1).
+divisionOperation(do(Z)) --> generalOperation(Z).
 
 generalOperation(go(Z)) --> identifier(Z).
 generalOperation(go(Z)) --> number(Z).
